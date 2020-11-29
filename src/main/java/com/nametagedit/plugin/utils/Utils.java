@@ -1,5 +1,8 @@
 package com.nametagedit.plugin.utils;
 
+import com.nametagedit.plugin.NametagEdit;
+import com.nametagedit.plugin.handlers.TabHandler;
+import com.nametagedit.plugin.handlers.TabHandlerRegister;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -7,15 +10,16 @@ import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-import com.nametagedit.plugin.packets.VersionChecker;
-import com.nametagedit.plugin.packets.VersionChecker.BukkitVersion;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class Utils {
+
 
     public static String format(String[] text, int to, int from) {
         return StringUtils.join(text, ' ', to, from).replace("'", "");
@@ -30,25 +34,11 @@ public class Utils {
     }
 
     public static String format(String input, boolean limitChars) {
-        String colored = ChatColor.translateAlternateColorCodes('&', input);
 
-        if(VersionChecker.getBukkitVersion() == BukkitVersion.v1_13_R1) {
-            return limitChars && colored.length() > 128 ? colored.substring(0, 128) : colored;
-        } else if(VersionChecker.getBukkitVersion() == BukkitVersion.v1_14_R1) {
-            return limitChars && colored.length() > 128 ? colored.substring(0, 128) : colored;
-        } else if(VersionChecker.getBukkitVersion() == BukkitVersion.v1_14_R2) {
-            return limitChars && colored.length() > 128 ? colored.substring(0, 128) : colored;
-        } else if(VersionChecker.getBukkitVersion() == BukkitVersion.v1_15_R1) {
-            return limitChars && colored.length() > 128 ? colored.substring(0, 128) : colored;
-        } else if(VersionChecker.getBukkitVersion() == BukkitVersion.v1_15_R2) {
-            return limitChars && colored.length() > 128 ? colored.substring(0, 128) : colored;
-        } else if(VersionChecker.getBukkitVersion() == BukkitVersion.v1_16_R1) {
-            return limitChars && colored.length() > 128 ? colored.substring(0, 128) : colored;
-        } else if(VersionChecker.getBukkitVersion() == BukkitVersion.v1_16_R2) {
-            return limitChars && colored.length() > 128 ? colored.substring(0, 128) : colored;
-        } else {
-            return limitChars && colored.length() > 16 ? colored.substring(0, 16) : colored;
-        }
+        NametagEdit plugin = JavaPlugin.getPlugin(NametagEdit.class);
+        TabHandler currentHandler = plugin.getTabHandlerRegister().getCurrentHandler();
+
+        return currentHandler.format(input, limitChars);
     }
 
     public static List<Player> getOnline() {

@@ -5,26 +5,19 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.nametagedit</groupId>
     <artifactId>nametagedit</artifactId>
-    <version>4.4.11</version>
+    <version>4.5.0</version>
     <packaging>jar</packaging>
     <name>NametagEdit</name>
     <url>http://maven.apache.org</url>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spigot.version>1.12.2-R0.1-SNAPSHOT</spigot.version>
+        <spigot.version>1.16.1</spigot.version>
     </properties>
     <dependencies>
         <!--Spigot API -->
         <dependency>
             <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
-            <version>${spigot.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <!--Bukkit API -->
-        <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>bukkit</artifactId>
+            <artifactId>spigot</artifactId>
             <version>${spigot.version}</version>
             <scope>provided</scope>
         </dependency>
@@ -60,6 +53,17 @@
             <scope>system</scope>
             <systemPath>${basedir}/lib/Guilds-3.5.3.8-RELEASE.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <version>0.9.12</version>
+        </dependency>
+        <dependency>
+            <groupId>org.javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>3.27.0-GA</version>
+        </dependency>
+
         <!-- LuckPerms -->
         <dependency>
             <groupId>net.luckperms</groupId>
@@ -180,6 +184,8 @@
                             <artifactSet>
                                 <includes>
                                     <include>org.slf4j:*</include>
+                                    <inclue>org.javassist</inclue>
+                                    <include>org.reflections</include>
                                     <include>com.zaxxer:*</include>
                                     <include>org.bstats.bStats-Metrics:*</include>
                                 </includes>

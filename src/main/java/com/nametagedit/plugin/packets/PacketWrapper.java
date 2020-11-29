@@ -5,8 +5,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import net.md_5.bungee.api.ChatColor;
+import net.minecraft.server.v1_16_R1.EnumChatFormat;
+import net.minecraft.server.v1_16_R1.IChatBaseComponent;
+import net.minecraft.server.v1_16_R1.PacketPlayOutScoreboardTeam;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
+import org.bukkit.Color;
+import org.bukkit.craftbukkit.v1_16_R1.util.CraftChatMessage;
 import org.bukkit.entity.Player;
 
 import com.nametagedit.plugin.NametagHandler;
@@ -45,32 +50,37 @@ public class PacketWrapper {
     @SuppressWarnings("unchecked")
     public PacketWrapper(String name, String prefix, String suffix, int param, Collection<?> players) {
         setupDefaults(name, param);
+
         if (param == 0 || param == 2) {
-            try {            	            	
+            try {
                 if (PacketAccessor.isLegacyVersion()) {
                     PacketAccessor.DISPLAY_NAME.set(packet, name);
                     PacketAccessor.PREFIX.set(packet, prefix);
                     PacketAccessor.SUFFIX.set(packet, suffix);
-                } else {					
-                    String color = ChatColor.getLastColors(prefix);
-                    String colorCode = null;
+                } else {
+                    // TODO: 21/08/2020 THIS WAS A TEST< UNCOMMENT THESE
+//                    String color = "";ChatColor.getLastColors(prefix);
+//                    String colorCode = null;
+//
+//                    if (!color.isEmpty()) {
+//                        colorCode = color.substring(color.length() - 1);
+//                        String chatColor = ChatColor.getByChar(colorCode).name();
+//
+//                        if (chatColor.equalsIgnoreCase("MAGIC"))
+//                            chatColor = "OBFUSCATED";
+//
+//                        Enum<?> colorEnum = Enum.valueOf(typeEnumChatFormat, chatColor);
+//                        PacketAccessor.TEAM_COLOR.set(packet, colorEnum);
+//                    }
 
-                    if (!color.isEmpty()) {						
-                        colorCode = color.substring(color.length() - 1);
-                        String chatColor = ChatColor.getByChar(colorCode).name();
 
-                        if (chatColor.equalsIgnoreCase("MAGIC"))
-                            chatColor = "OBFUSCATED";
+                    IChatBaseComponent[] iChatBaseComponents = CraftChatMessage.fromString(prefix);
 
-                        Enum<?> colorEnum = Enum.valueOf(typeEnumChatFormat, chatColor);
-                        PacketAccessor.TEAM_COLOR.set(packet, colorEnum);
-                    }
-
-                    PacketAccessor.DISPLAY_NAME.set(packet, ChatComponentText.newInstance(name));
-                    PacketAccessor.PREFIX.set(packet, ChatComponentText.newInstance(prefix));
-
-                    if (colorCode != null)
-                        suffix = ChatColor.getByChar(colorCode) + suffix;
+                    PacketAccessor.DISPLAY_NAME.set(packet, ChatComponentText.newInstance(ChatColor.of("#434343") + name));
+                    PacketAccessor.PREFIX.set(packet, iChatBaseComponents[0]);
+//
+//                    if (colorCode != null)
+//                        suffix = ChatColor.getByChar(colorCode) + suffix;
 
                     PacketAccessor.SUFFIX.set(packet, ChatComponentText.newInstance(suffix));
                 }
@@ -88,6 +98,8 @@ public class PacketWrapper {
                 error = e.getMessage();
             }
         }
+
+
     }
 
     @SuppressWarnings("unchecked")

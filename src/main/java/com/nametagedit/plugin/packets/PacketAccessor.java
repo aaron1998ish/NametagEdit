@@ -1,5 +1,6 @@
 package com.nametagedit.plugin.packets;
 
+import net.minecraft.server.v1_16_R1.PacketPlayOutScoreboardTeam;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 

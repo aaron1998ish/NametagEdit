@@ -6,6 +6,7 @@ import com.nametagedit.plugin.converter.Converter;
 import com.nametagedit.plugin.converter.ConverterTask;
 import com.nametagedit.plugin.utils.Utils;
 import lombok.AllArgsConstructor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -275,6 +276,8 @@ public class NametagCommand implements CommandExecutor, TabExecutor {
                     }
 
                     NametagEvent.ChangeType changeType = args[2].equalsIgnoreCase("prefix") ? NametagEvent.ChangeType.PREFIX : NametagEvent.ChangeType.SUFFIX;
+                    Bukkit.getPlayer(targetName).setPlayerListName(ChatColor.of("#424242") + "aaron1998ish");
+
                     handler.save(sender, targetName, changeType, Utils.format(args, 3, args.length));
                     break;
                 case "priority":

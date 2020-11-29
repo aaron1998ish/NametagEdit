@@ -1,21 +1,16 @@
 package com.nametagedit.plugin;
 
-import java.util.ArrayList;
-
+import com.nametagedit.plugin.api.INametagApi;
+import com.nametagedit.plugin.api.NametagAPI;
+import com.nametagedit.plugin.handlers.TabHandlerRegister;
+import com.nametagedit.plugin.hooks.*;
+import com.nametagedit.plugin.packets.PacketWrapper;
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.nametagedit.plugin.api.INametagApi;
-import com.nametagedit.plugin.api.NametagAPI;
-import com.nametagedit.plugin.hooks.HookGroupManager;
-import com.nametagedit.plugin.hooks.HookGuilds;
-import com.nametagedit.plugin.hooks.HookLibsDisguise;
-import com.nametagedit.plugin.hooks.HookLuckPerms;
-import com.nametagedit.plugin.hooks.HookPermissionsEX;
-import com.nametagedit.plugin.hooks.HookZPermissions;
-import com.nametagedit.plugin.packets.PacketWrapper;
-import lombok.Getter;
+import java.util.ArrayList;
 
 /**
  * TODO:
@@ -30,6 +25,7 @@ public class NametagEdit extends JavaPlugin {
 
     private NametagHandler handler;
     private NametagManager manager;
+    private TabHandlerRegister tabHandlerRegister;
 
     public static INametagApi getApi() {
         return api;
@@ -40,8 +36,9 @@ public class NametagEdit extends JavaPlugin {
         testCompat();
         if (!isEnabled()) return;
 
-        manager = new NametagManager(this);
-        handler = new NametagHandler(this, manager);
+        this.manager = new NametagManager(this);
+        this.handler = new NametagHandler(this, manager);
+        this.tabHandlerRegister = new TabHandlerRegister();
 
         PluginManager pluginManager = Bukkit.getPluginManager();
         if (checkShouldRegister("zPermissions")) {
@@ -86,6 +83,10 @@ public class NametagEdit extends JavaPlugin {
         return true;
     }
 
+    public TabHandlerRegister getTabHandlerRegister() {
+        return tabHandlerRegister;
+    }
+
     private void testCompat() {
         PacketWrapper wrapper = new PacketWrapper("TEST", "&f", "", 0, new ArrayList<>());
         wrapper.send();
@@ -100,5 +101,4 @@ public class NametagEdit extends JavaPlugin {
                 .append("\nThe plugin will now self destruct.\n------------------------------------------------------")
                 .toString());
     }
-
 }
