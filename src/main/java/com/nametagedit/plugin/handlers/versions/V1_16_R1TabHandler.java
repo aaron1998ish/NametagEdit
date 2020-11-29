@@ -1,18 +1,9 @@
 package com.nametagedit.plugin.handlers.versions;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
-import com.nametagedit.plugin.handlers.*;
-import net.md_5.bungee.api.ChatColor;
-import net.minecraft.server.v1_16_R1.*;
-import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_16_R1.CraftServer;
-import org.bukkit.craftbukkit.v1_16_R1.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_16_R1.util.CraftChatMessage;
+import com.nametagedit.plugin.handlers.AutoRegisterTabHandler;
+import com.nametagedit.plugin.handlers.TabHandler;
 
 import java.awt.*;
-import java.util.StringJoiner;
-import java.util.UUID;
 import java.util.regex.Pattern;
 
 @AutoRegisterTabHandler(versions = {"v1_16_R1", "v_16_R2"})
@@ -34,7 +25,7 @@ public class V1_16_R1TabHandler extends TabHandler {
     @Override
     public String format(final String input, final boolean limitChars) {
         String resized = (limitChars && input.length() > 128) ? input.substring(0, 128) : input;
-        return org.bukkit.ChatColor.translateAlternateColorCodes('&', (limitChars && input.length() > 128) ? input.substring(0, 128) : input);
+        return org.bukkit.ChatColor.translateAlternateColorCodes('&', resized);
         //return chatFormat(resized);
     }
 
